@@ -1,6 +1,6 @@
 {
   "name": "@animafy/assets",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "type": "module",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -11,5 +11,9 @@
   "license": "MIT",
   "dependencies": {
     "@animafy/emoji": "*"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/demondevx/animafy.git"
   }
 }

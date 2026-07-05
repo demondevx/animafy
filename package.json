@@ -1,6 +1,6 @@
 {
   "name": "animafy-monorepo",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Discord Canvas Library Monorepo",
   "private": true,
   "workspaces": [
@@ -21,5 +21,9 @@
   "dependencies": {
     "@napi-rs/canvas": "^1.0.2",
     "omggif": "^1.0.10"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/demondevx/animafy.git"
   }
 }

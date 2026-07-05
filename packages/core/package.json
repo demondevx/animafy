@@ -1,6 +1,6 @@
 {
   "name": "@animafy/core",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "type": "module",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -14,5 +14,9 @@
     "@animafy/emoji": "*",
     "@animafy/text": "*",
     "@napi-rs/canvas": "*"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/demondevx/animafy.git"
   }
 }

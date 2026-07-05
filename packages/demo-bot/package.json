@@ -1,6 +1,6 @@
 {
   "name": "@animafy/demo-bot",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "type": "module",
   "main": "dist/index.js",
   "scripts": {
@@ -14,5 +14,9 @@
     "dotenv": "^16.4.5"
   },
   "author": "Demondev_",
-  "private": true
+  "private": true,
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/demondevx/animafy.git"
+  }
 }
