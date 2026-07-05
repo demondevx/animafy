@@ -1,5 +1,4 @@
-import type { AnimatedAsset } from '../../assets/src/AnimatedAsset.js';
-import type { GifDecoder } from './GifDecoder.js';
+import type { AnimatedAsset, GifDecoder } from 'animafy-assets';
 export declare class OmggifDecoder implements GifDecoder {
     decode(buffer: Buffer): AnimatedAsset;
 }

@@ -17,7 +17,11 @@ export class AssetManager {
         return this.cache.get(source);
     }
     async fetchBuffer(url) {
-        const res = await fetch(url);
+        const res = await fetch(url, {
+            headers: {
+                'User-Agent': 'Animafy/1.0 (+https://github.com/animafy)'
+            }
+        });
         if (!res.ok) {
             throw new Error(`Failed to fetch asset from ${url}: ${res.statusText}`);
         }

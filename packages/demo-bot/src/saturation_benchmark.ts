@@ -21,7 +21,7 @@ async function runSingleJob(id: number, avatarUrl: string): Promise<any> {
     const start = performance.now();
     await builder.exportGIF({
         fastMode: false,
-        onMetrics: (m) => {
+        onMetrics: (m: any) => {
             composeTime = m.composeTime;
             encodeTime = m.encodeTime;
         }

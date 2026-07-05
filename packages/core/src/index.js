@@ -1,4 +1,5 @@
-export * from './Operations.js';
-export * from './AnimationRenderer.js';
 export * from './CanvasBuilder.js';
+export { AnimationRenderer } from './AnimationRenderer.js';
+export { GifWorkerPool, WorkerSession } from './GifWorkerPool.js';
+export * from './Operations.js';
 //# sourceMappingURL=index.js.map

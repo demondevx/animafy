@@ -39,7 +39,7 @@ async function runAvatarPipeline(avatarUrl: string) {
     let encodeTime = 0;
     const exportStart = performance.now();
     await builder.exportGIF({
-        onMetrics: (metrics) => {
+        onMetrics: (metrics: any) => {
             composeTime = metrics.composeTime;
             encodeTime = metrics.encodeTime;
         },

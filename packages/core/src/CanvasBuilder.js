@@ -2,11 +2,13 @@ import { createCanvas } from '@napi-rs/canvas';
 import { AnimationRenderer } from './AnimationRenderer.js';
 export class CanvasBuilder {
     assetManager;
+    workerPool;
     width = 800;
     height = 400;
     operations = [];
-    constructor(assetManager) {
+    constructor(assetManager, workerPool) {
         this.assetManager = assetManager;
+        this.workerPool = workerPool;
     }
     setSize(width, height) {
         this.width = width;
@@ -19,6 +21,14 @@ export class CanvasBuilder {
     }
     drawText(text, x, y, fontSize = 32, fontFamily = 'sans-serif', color = '#ffffff') {
         this.operations.push({ type: 'text', text, x, y, fontSize, fontFamily, color });
+        return this;
+    }
+    drawImage(url, x, y, width, height) {
+        this.operations.push({ type: 'image', url, x, y, width, height });
+        return this;
+    }
+    drawRect(x, y, width, height, color, radius) {
+        this.operations.push({ type: 'rect', x, y, width, height, color, radius });
         return this;
     }
     setBackground(color) {
@@ -38,11 +48,11 @@ export class CanvasBuilder {
     /**
      * Executes the render pipeline and synchronizes animated assets into a GIF buffer.
      */
-    async exportGIF() {
+    async exportGIF(options) {
         const canvas = createCanvas(this.width, this.height);
-        const renderer = new AnimationRenderer(canvas, this.assetManager);
+        const renderer = new AnimationRenderer(canvas, this.assetManager, this.workerPool);
         await renderer.loadAssets(this.operations);
-        return renderer.renderAnimated(this.operations);
+        return renderer.renderAnimated(this.operations, options);
     }
 }
 //# sourceMappingURL=CanvasBuilder.js.map

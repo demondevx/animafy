@@ -1,4 +1,4 @@
-import { CanvasBuilder } from '../../core/src/CanvasBuilder.js';
+import { CanvasBuilder } from 'animafy-core';
 export class DiscordCanvasBuilder extends CanvasBuilder {
     /**
      * Helper to draw a circular avatar.

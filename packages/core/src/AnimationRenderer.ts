@@ -45,7 +45,7 @@ export class AnimationRenderer {
         
         for (const op of operations) {
             if (op.type === 'avatar' || op.type === 'image') {
-                promises.push(this.assetManager.resolve(op.url).catch(e => {
+                promises.push(this.assetManager.resolve(op.url).catch((e: any) => {
                     console.error(`Failed to load asset ${op.url}:`, e.message);
                     return null as any;
                 }));
