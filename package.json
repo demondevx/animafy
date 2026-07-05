@@ -7,7 +7,7 @@
     "packages/*"
   ],
   "scripts": {
-    "build": "npm run build --workspaces",
+    "build": "npm run build -w animafy-emoji && npm run build -w animafy-text && npm run build -w animafy-decoders && npm run build -w animafy-assets && npm run build -w animafy-core && npm run build -w animafy-discord && npm run build -w animafy && npm run build -w animafy-examples && npm run build -w animafy-demo-bot",
     "test": "vitest"
   },
   "author": "Demondev_",
