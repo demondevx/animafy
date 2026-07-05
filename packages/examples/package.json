@@ -1,6 +1,6 @@
 {
-  "name": "@animafy/examples",
-  "version": "1.0.1",
+  "name": "animafy-examples",
+  "version": "1.0.2",
   "type": "module",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -13,10 +13,10 @@
     "@types/node": "^26.1.0"
   },
   "dependencies": {
-    "@animafy/assets": "*",
-    "@animafy/decoders": "*",
-    "@animafy/core": "*",
-    "@animafy/discord": "*"
+    "animafy-assets": "*",
+    "animafy-decoders": "*",
+    "animafy-core": "*",
+    "animafy-discord": "*"
   },
   "private": true,
   "repository": {

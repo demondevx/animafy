@@ -1,5 +1,5 @@
 import { type AssetItem } from './AssetCache.js';
-import type { GifDecoder } from '@animafy/decoders';
+import type { GifDecoder } from 'animafy-decoders';
 export declare class AssetManager {
     private readonly cache;
     private gifDecoder;

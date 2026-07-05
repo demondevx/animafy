@@ -1,6 +1,6 @@
-import { CanvasBuilder } from '@animafy/core';
-import type { AssetItem } from '@animafy/assets';
-import type { DrawOperation } from '@animafy/core';
+import { CanvasBuilder } from 'animafy-core';
+import type { AssetItem } from 'animafy-assets';
+import type { DrawOperation } from 'animafy-core';
 
 export class DiscordCanvasBuilder extends CanvasBuilder {
     /**

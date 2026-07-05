@@ -1,6 +1,6 @@
 import { ImageData } from '@napi-rs/canvas';
-import { TextSegmenter, SegmentType } from '@animafy/text';
-import { EmojiFetcher } from '@animafy/emoji';
+import { TextSegmenter, SegmentType } from 'animafy-text';
+import { EmojiFetcher } from 'animafy-emoji';
 /**
  * Responsible for converting a sequence of immutable operations into a final
  * rasterized output (PNG or GIF), properly synchronizing any animated assets.

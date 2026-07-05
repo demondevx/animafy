@@ -1,5 +1,5 @@
 import { loadImage, type Image } from '@napi-rs/canvas';
-import { EmojiFetcher } from '@animafy/emoji';
+import { EmojiFetcher } from 'animafy-emoji';
 import type { AssetItem } from './AssetCache.js';
 import { AssetCache } from './AssetCache.js';
 import type { GifDecoder } from './GifDecoder.js';

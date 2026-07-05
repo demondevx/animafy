@@ -1,9 +1,9 @@
 import { createCanvas, ImageData } from '@napi-rs/canvas';
 import type { Canvas, SKRSContext2D } from '@napi-rs/canvas';
-import type { AssetManager, AssetItem } from '@animafy/assets';
+import type { AssetManager, AssetItem } from 'animafy-assets';
 import type { DrawOperation, DrawTextOperation } from './Operations.js';
-import { TextSegmenter, SegmentType } from '@animafy/text';
-import { EmojiFetcher } from '@animafy/emoji';
+import { TextSegmenter, SegmentType } from 'animafy-text';
+import { EmojiFetcher } from 'animafy-emoji';
 import type { GifWorkerPool } from './GifWorkerPool.js';
 import crypto from 'node:crypto';
 

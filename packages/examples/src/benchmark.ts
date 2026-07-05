@@ -1,6 +1,6 @@
-import { AssetManager } from '@animafy/assets';
-import { OmggifDecoder } from '@animafy/decoders';
-import { CanvasBuilder } from '@animafy/core';
+import { AssetManager } from 'animafy-assets';
+import { OmggifDecoder } from 'animafy-decoders';
+import { CanvasBuilder } from 'animafy-core';
 
 async function runBenchmark() {
     console.log('--- Animafy Benchmark ---');

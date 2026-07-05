@@ -1,5 +1,5 @@
 import { GifReader } from 'omggif';
-import type { AnimatedAsset, Frame, GifDecoder } from '@animafy/assets';
+import type { AnimatedAsset, Frame, GifDecoder } from 'animafy-assets';
 
 export class OmggifDecoder implements GifDecoder {
     public decode(buffer: Buffer): AnimatedAsset {

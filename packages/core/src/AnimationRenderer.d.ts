@@ -1,5 +1,5 @@
 import type { Canvas } from '@napi-rs/canvas';
-import type { AssetManager } from '@animafy/assets';
+import type { AssetManager } from 'animafy-assets';
 import type { DrawOperation } from './Operations.js';
 /**
  * Responsible for converting a sequence of immutable operations into a final

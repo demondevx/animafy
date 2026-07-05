@@ -14,7 +14,7 @@ function replaceScope(dir) {
             replaceScope(fullPath);
         } else if (/\.(ts|js|json|md)$/i.test(fullPath)) {
             let content = fs.readFileSync(fullPath, 'utf8');
-            if (content.includes('@animafy/')) {
+            if (content.includes('animafy-')) {
                 console.log(`Updating scope in: ${fullPath}`);
                 content = content.replace(/@animafy\//g, 'animafy-');
                 fs.writeFileSync(fullPath, content, 'utf8');
@@ -24,4 +24,4 @@ function replaceScope(dir) {
 }
 
 replaceScope(__dirname);
-console.log('Finished renaming @animafy/ scopes to animafy-');
+console.log('Finished renaming animafy- scopes to animafy-');

@@ -6,7 +6,7 @@ function addDeps(pkg, deps) {
   fs.writeFileSync(`./packages/${pkg}/package.json`, JSON.stringify(p, null, 2));
 }
 
-addDeps('core', ['@animafy/assets', '@animafy/emoji', '@animafy/text', '@napi-rs/canvas']);
-addDeps('discord', ['@animafy/core', '@animafy/assets']);
-addDeps('decoders', ['@animafy/assets', 'omggif']);
-addDeps('examples', ['@animafy/assets', '@animafy/decoders', '@animafy/core', '@animafy/discord']);
+addDeps('core', ['animafy-assets', 'animafy-emoji', 'animafy-text', '@napi-rs/canvas']);
+addDeps('discord', ['animafy-core', 'animafy-assets']);
+addDeps('decoders', ['animafy-assets', 'omggif']);
+addDeps('examples', ['animafy-assets', 'animafy-decoders', 'animafy-core', 'animafy-discord']);

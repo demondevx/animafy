@@ -1,5 +1,5 @@
 import { createCanvas } from '@napi-rs/canvas';
-import type { AssetManager } from '@animafy/assets';
+import type { AssetManager } from 'animafy-assets';
 import { AnimationRenderer } from './AnimationRenderer.js';
 import type { GifWorkerPool } from './GifWorkerPool.js';
 import type { DrawOperation } from './Operations.js';

@@ -1,6 +1,6 @@
-import { AssetManager } from '@animafy/assets';
-import { OmggifDecoder } from '@animafy/decoders';
-import { CanvasBuilder } from '@animafy/core';
+import { AssetManager } from 'animafy-assets';
+import { OmggifDecoder } from 'animafy-decoders';
+import { CanvasBuilder } from 'animafy-core';
 import * as fs from 'fs';
 import * as path from 'path';
 import { fileURLToPath } from 'url';

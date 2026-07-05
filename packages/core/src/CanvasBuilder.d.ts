@@ -1,4 +1,4 @@
-import type { AssetManager } from '@animafy/assets';
+import type { AssetManager } from 'animafy-assets';
 export declare class CanvasBuilder {
     private readonly assetManager;
     private width;

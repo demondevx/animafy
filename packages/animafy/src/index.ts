@@ -1,7 +1,7 @@
-import { AssetManager, type CacheOptions } from '@animafy/assets';
-import { CanvasBuilder, GifWorkerPool } from '@animafy/core';
+import { AssetManager, type CacheOptions } from 'animafy-assets';
+import { CanvasBuilder, GifWorkerPool } from 'animafy-core';
 import * as os from 'os';
-import { OmggifDecoder } from '@animafy/decoders';
+import { OmggifDecoder } from 'animafy-decoders';
 
 export interface AnimafyClientOptions {
     cache?: CacheOptions;
@@ -56,4 +56,4 @@ export function createAnimafy(): AnimafyClient {
 }
 
 // Explicitly re-export only the public interfaces and types developers might need
-export { CanvasBuilder } from '@animafy/core';
+export { CanvasBuilder } from 'animafy-core';
