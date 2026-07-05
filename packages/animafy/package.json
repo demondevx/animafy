@@ -1,6 +1,6 @@
 {
   "name": "animafy",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "High-performance Canvas + GIF rendering engine for Discord bots",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -20,10 +20,10 @@
     "build": "tsc"
   },
   "dependencies": {
-    "animafy-assets": "1.0.4",
-    "animafy-core": "1.0.4",
-    "animafy-decoders": "1.0.4",
-    "animafy-discord": "1.0.4"
+    "animafy-assets": "1.0.5",
+    "animafy-core": "1.0.5",
+    "animafy-decoders": "1.0.5",
+    "animafy-discord": "1.0.5"
   },
   "devDependencies": {
     "typescript": "^5.0.0"

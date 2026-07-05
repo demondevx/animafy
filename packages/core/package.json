@@ -1,6 +1,6 @@
 {
   "name": "animafy-core",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "type": "module",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -10,9 +10,9 @@
   "author": "Demondev_",
   "license": "MIT",
   "dependencies": {
-    "animafy-assets": "1.0.4",
-    "animafy-emoji": "1.0.4",
-    "animafy-text": "1.0.4",
+    "animafy-assets": "1.0.5",
+    "animafy-emoji": "1.0.5",
+    "animafy-text": "1.0.5",
     "@napi-rs/canvas": "*"
   },
   "repository": {
