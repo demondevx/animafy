@@ -13,10 +13,10 @@
     "@types/node": "^26.1.0"
   },
   "dependencies": {
-    "animafy-assets": "*",
-    "animafy-decoders": "*",
-    "animafy-core": "*",
-    "animafy-discord": "*"
+    "animafy-assets": "1.0.3",
+    "animafy-decoders": "1.0.3",
+    "animafy-core": "1.0.3",
+    "animafy-discord": "1.0.3"
   },
   "private": true,
   "repository": {

@@ -20,10 +20,10 @@
     "build": "tsc"
   },
   "dependencies": {
-    "animafy-assets": "1.0.0",
-    "animafy-core": "1.0.0",
-    "animafy-decoders": "1.0.0",
-    "animafy-discord": "1.0.0"
+    "animafy-assets": "1.0.3",
+    "animafy-core": "1.0.3",
+    "animafy-decoders": "1.0.3",
+    "animafy-discord": "1.0.3"
   },
   "devDependencies": {
     "typescript": "^5.0.0"

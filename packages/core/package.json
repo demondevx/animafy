@@ -10,9 +10,9 @@
   "author": "Demondev_",
   "license": "MIT",
   "dependencies": {
-    "animafy-assets": "*",
-    "animafy-emoji": "*",
-    "animafy-text": "*",
+    "animafy-assets": "1.0.3",
+    "animafy-emoji": "1.0.3",
+    "animafy-text": "1.0.3",
     "@napi-rs/canvas": "*"
   },
   "repository": {

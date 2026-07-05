@@ -10,8 +10,8 @@
   "author": "Demondev_",
   "license": "MIT",
   "dependencies": {
-    "animafy-core": "*",
-    "animafy-assets": "*"
+    "animafy-core": "1.0.3",
+    "animafy-assets": "1.0.3"
   },
   "repository": {
     "type": "git",

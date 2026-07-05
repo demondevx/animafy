@@ -10,7 +10,7 @@
   "author": "Demondev_",
   "license": "MIT",
   "dependencies": {
-    "animafy-assets": "*",
+    "animafy-assets": "1.0.3",
     "omggif": "*"
   },
   "repository": {

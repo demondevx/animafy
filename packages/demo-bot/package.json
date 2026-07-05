@@ -9,7 +9,7 @@
     "deploy": "node dist/deploy.js"
   },
   "dependencies": {
-    "animafy": "1.0.0",
+    "animafy": "1.0.3",
     "discord.js": "^14.15.0",
     "dotenv": "^16.4.5"
   },
