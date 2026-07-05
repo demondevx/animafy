@@ -1,0 +1,25 @@
+{
+  "name": "animafy-monorepo",
+  "version": "1.0.0",
+  "description": "Discord Canvas Library Monorepo",
+  "private": true,
+  "workspaces": [
+    "packages/*"
+  ],
+  "scripts": {
+    "build": "npm run build --workspaces",
+    "test": "vitest"
+  },
+  "author": "Demondev_",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/node": "^26.1.0",
+    "@types/omggif": "^1.0.5",
+    "typescript": "^6.0.3",
+    "vitest": "^4.1.9"
+  },
+  "dependencies": {
+    "@napi-rs/canvas": "^1.0.2",
+    "omggif": "^1.0.10"
+  }
+}

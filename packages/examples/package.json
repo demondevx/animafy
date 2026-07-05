@@ -1,0 +1,22 @@
+{
+  "name": "@animafy/examples",
+  "version": "1.0.0",
+  "type": "module",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsc"
+  },
+  "author": "Demondev_",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/node": "^26.1.0"
+  },
+  "dependencies": {
+    "@animafy/assets": "*",
+    "@animafy/decoders": "*",
+    "@animafy/core": "*",
+    "@animafy/discord": "*"
+  },
+  "private": true
+}

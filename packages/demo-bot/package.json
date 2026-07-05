@@ -1,0 +1,18 @@
+{
+  "name": "@animafy/demo-bot",
+  "version": "1.0.0",
+  "type": "module",
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "tsc",
+    "start": "node --expose-gc dist/index.js",
+    "deploy": "node dist/deploy.js"
+  },
+  "dependencies": {
+    "animafy": "1.0.0",
+    "discord.js": "^14.15.0",
+    "dotenv": "^16.4.5"
+  },
+  "author": "Demondev_",
+  "private": true
+}
