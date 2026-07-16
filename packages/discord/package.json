@@ -1,6 +1,6 @@
 {
   "name": "animafy-discord",
-  "version": "1.0.6",
+  "version": "1.0.7",
   "type": "module",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -10,8 +10,8 @@
   "author": "Demondev_",
   "license": "MIT",
   "dependencies": {
-    "animafy-core": "1.0.6",
-    "animafy-assets": "1.0.6"
+    "animafy-core": "1.0.7",
+    "animafy-assets": "1.0.7"
   },
   "repository": {
     "type": "git",

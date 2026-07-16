@@ -8,8 +8,6 @@
   </p>
 </div>
 
-![demo](./assets/demo.gif)
-
 Create fast, production-grade Discord canvas images & GIFs in seconds. Animafy offloads heavy GIF encoding to a multi-core Worker Pool and automatically caches resources, preventing your Node.js event loop from freezing during heavy server load.
 
 ```ts
@@ -39,11 +37,11 @@ const buffer = await animafy.canvas()
 
 ## Showcase
 
-![rank-example](./assets/rank-example.png)
-*Generate lightning-fast static `/rank` cards.*
+![profile-card](https://raw.githubusercontent.com/demondevx/animafy/main/assets/profile.gif)
+*Animated profile cards with real-time Discord data.*
 
-![showcase](./assets/showcase.gif)
-*Animate multiple avatars simultaneously.*
+![rank-card](https://raw.githubusercontent.com/demondevx/animafy/main/assets/rank.gif)
+*Generate stunning `/rank` cards with XP progress bars.*
 
 ---
 
