@@ -1,6 +1,6 @@
 {
   "name": "animafy-assets",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "type": "module",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -10,7 +10,7 @@
   "author": "Demondev_",
   "license": "MIT",
   "dependencies": {
-    "animafy-emoji": "1.0.5"
+    "animafy-emoji": "1.0.6"
   },
   "repository": {
     "type": "git",
