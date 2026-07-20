@@ -86,3 +86,70 @@ The `AnimafyClient` contains a "fridge" (`AssetManager`). When you call `drawAva
 - If the fridge gets too full (over 250 items), it throws away the oldest items.
 
 This makes Animafy blisteringly fast under heavy server load!
+
+---
+
+## 6. Using Built-in Templates (The Magic Cards)
+
+If you are just starting out with programming, drawing text and shapes manually might feel like too much math. That's why we added **Templates**!
+
+Templates are like pre-made coloring books. The lines are already drawn; you just hand Animafy the crayons (your data), and it paints a beautiful card for you.
+
+```javascript
+// This is all you need to make an awesome Rank Card!
+const buffer = await animafyClient.rankCard({
+    username: 'DiscordFan99',
+    avatarUrl: user.displayAvatarURL({ extension: 'png', forceStatic: false }),
+    level: 10,
+    xp: 500,
+    maxXp: 1000,
+    rank: 1
+});
+```
+
+*Note on Avatars: Always use `extension: 'png', forceStatic: false` when getting avatars from Discord! Discord will smartly decide whether to give you a static picture or an animated GIF.*
+
+## 7. Adding Visual Effects (Shadows and Filters)
+
+Want to make your canvas look like it was designed in Photoshop? You can add effects like Shadows (to make things pop out) or Blurs.
+
+Think of effects like a magic spotlight. When you turn the spotlight on, everything you draw next gets the effect. But you don't want the spotlight to ruin the rest of your painting! 
+
+To fix this, we use `pushState()` (save my canvas) and `popState()` (go back to how it was).
+
+```javascript
+builder
+    .pushState() // 📸 Save the canvas normally
+    
+    .setShadow(5, 5, 10, 'black') // 💡 Turn on the Shadow Spotlight!
+    .drawText('This text has a shadow!', 50, 50, 30, 'Arial', 'white')
+    
+    .popState() // ⏪ Turn off the spotlight (go back to the saved state)
+    
+    .drawText('This text is normal again.', 50, 100, 30, 'Arial', 'white');
+```
+
+## 8. Making Your Own Animations (Timeline)
+
+The Timeline is like a movie director. Instead of a single picture, you are directing a movie frame by frame.
+
+```javascript
+const gifBuffer = await animafyClient.timeline()
+    .setSize(800, 400)
+    .setFPS(20) // The movie runs at 20 frames per second
+    
+    // Scene 1: The title shows up for 1 second (1000 milliseconds)
+    .addFrame((canvas) => {
+        canvas.setBackground('black').drawText('Scene 1', 100, 100, 50, 'Arial', 'red');
+    }, 1000)
+    
+    // The director yells "FADE!" - It smoothly transitions the scenes over half a second
+    .transition('fade', 500)
+    
+    // Scene 2: The next text shows up for 1 second
+    .addFrame((canvas) => {
+        canvas.setBackground('white').drawText('Scene 2', 100, 100, 50, 'Arial', 'blue');
+    }, 1000)
+    
+    .export(); // Print the movie!
+```
