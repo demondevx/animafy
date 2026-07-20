@@ -1,59 +1,94 @@
 import { AssetManager, type CacheOptions } from 'animafy-assets';
-import { CanvasBuilder, GifWorkerPool } from 'animafy-core';
+import { CanvasBuilder, GifWorkerPool, TimelineBuilder } from 'animafy-core';
 import * as os from 'os';
 import { OmggifDecoder } from 'animafy-decoders';
+import {
+    buildRankCard, buildWelcomeCard, buildProfileCard,
+    buildLeaderboardCard, buildLevelUpCard,
+    type RankCardOptions, type WelcomeCardOptions,
+    type ProfileCardOptions, type LeaderboardCardOptions,
+    type LevelUpCardOptions
+} from 'animafy-templates';
 
 export interface AnimafyClientOptions {
     cache?: CacheOptions;
     workerPoolSize?: number;
 }
 
-/**
- * Advanced usage client that gives full isolation of internal AssetManager.
- * Recommended for multi-bot or heavily sharded environments.
- */
 export class AnimafyClient {
     private readonly assetManager: AssetManager;
     private readonly workerPool: GifWorkerPool;
 
     constructor(options?: AnimafyClientOptions) {
         this.assetManager = new AssetManager(options?.cache);
-        const poolSize = options?.workerPoolSize || Math.min(os.cpus().length, 8); // Cap at 8 for standard workloads
+        const poolSize = options?.workerPoolSize || Math.min(os.cpus().length, 8);
         this.workerPool = new GifWorkerPool({ size: poolSize });
     }
 
-    /**
-     * Creates a new CanvasBuilder instance bound to this client's AssetManager.
-     */
     public canvas(): CanvasBuilder {
         return new CanvasBuilder(this.assetManager, this.workerPool);
     }
 
-    /**
-     * Exposes the internal AssetManager for cache control operations.
-     */
+    public timeline(): TimelineBuilder {
+        return new TimelineBuilder(this.assetManager, this.workerPool);
+    }
+
     public get cache(): AssetManager {
         return this.assetManager;
     }
+
+    // --- Built-in Templates ---
+
+    public async rankCard(opts: RankCardOptions & { animated?: boolean }): Promise<Buffer> {
+        const builder = this.canvas();
+        buildRankCard(builder, opts);
+        return opts.animated ? builder.exportGIF({ fastMode: true }) : builder.exportPNG();
+    }
+
+    public async welcomeCard(opts: WelcomeCardOptions & { animated?: boolean }): Promise<Buffer> {
+        const builder = this.canvas();
+        buildWelcomeCard(builder, opts);
+        return opts.animated ? builder.exportGIF({ fastMode: true }) : builder.exportPNG();
+    }
+
+    public async profileCard(opts: ProfileCardOptions & { animated?: boolean }): Promise<Buffer> {
+        const builder = this.canvas();
+        buildProfileCard(builder, opts);
+        return opts.animated ? builder.exportGIF({ fastMode: true }) : builder.exportPNG();
+    }
+
+    public async leaderboardCard(opts: LeaderboardCardOptions & { animated?: boolean }): Promise<Buffer> {
+        const builder = this.canvas();
+        buildLeaderboardCard(builder, opts);
+        return opts.animated ? builder.exportGIF({ fastMode: true }) : builder.exportPNG();
+    }
+
+    public async levelUpCard(opts: LevelUpCardOptions & { animated?: boolean }): Promise<Buffer> {
+        const builder = this.canvas();
+        buildLevelUpCard(builder, opts);
+        return opts.animated ? builder.exportGIF({ fastMode: true }) : builder.exportPNG();
+    }
 }
 
-/**
- * Beginner-friendly factory for creating an AnimafyClient with sensible defaults.
- * Configured automatically for standard Discord bot workloads.
- */
-export function createAnimafy(): AnimafyClient {
+export function createAnimafy(options?: AnimafyClientOptions): AnimafyClient {
     const client = new AnimafyClient({
         cache: {
-            maxSize: 250, // 250 assets default cap
-            ttl: 5 * 60 * 1000 // 5 minutes TTL
-        }
+            maxSize: 250,
+            ttl: 5 * 60 * 1000,
+            ...options?.cache
+        },
+        workerPoolSize: options?.workerPoolSize
     });
-    
-    // Automatically configure the GIF decoder for ease of use
+
     client.cache.setGifDecoder(new OmggifDecoder());
-    
     return client;
 }
 
-// Explicitly re-export only the public interfaces and types developers might need
-export { CanvasBuilder } from 'animafy-core';
+// Re-export public API surface
+export { CanvasBuilder, TimelineBuilder } from 'animafy-core';
+export type { RenderOptions, RenderMetrics, DrawOperation, GradientStop } from 'animafy-core';
+export type {
+    RankCardOptions, WelcomeCardOptions, ProfileCardOptions,
+    LeaderboardCardOptions, LeaderboardEntry, LevelUpCardOptions,
+    ThemeColors
+} from 'animafy-templates';

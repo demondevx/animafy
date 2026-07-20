@@ -1,17 +1,17 @@
 {
   "name": "animafy-discord",
-  "version": "1.0.7",
+  "version": "2.0.0",
   "type": "module",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
-    "build": "tsc"
+    "build": "tsc -b"
   },
   "author": "Demondev_",
   "license": "MIT",
   "dependencies": {
-    "animafy-core": "1.0.7",
-    "animafy-assets": "1.0.7"
+    "animafy-core": "2.0.0",
+    "animafy-assets": "2.0.0"
   },
   "repository": {
     "type": "git",

@@ -1,41 +1,10 @@
 # Examples
 
-Here are some real-world Discord.js Slash Commands you can copy and adapt for your own bot.
+Here are some real-world Discord.js Slash Commands you can copy and adapt for your own bot. Animafy v2.0 makes building complex graphics easier than ever.
 
-## 1. The Animated `/welcome` Card
+## 1. The Built-in Neon Rank Card
 
-This example generates a beautiful dark-mode welcome card, complete with the user's animated avatar.
-
-```javascript
-import { AttachmentBuilder, SlashCommandBuilder } from 'discord.js';
-import { animafyClient } from '../services/canvasService.js';
-
-export const data = new SlashCommandBuilder()
-    .setName('welcome')
-    .setDescription('Preview the welcome card for a user');
-
-export async function execute(interaction) {
-    await interaction.deferReply();
-
-    const avatarUrl = interaction.user.displayAvatarURL({ extension: 'gif', size: 256 });
-    const username = interaction.user.displayName;
-
-    const buffer = await animafyClient.canvas()
-        .setSize(800, 300)
-        .setBackground('#1E1F22') // Discord dark background
-        .drawAvatar(avatarUrl, 50, 75, 150)
-        .drawText('WELCOME TO THE SERVER!', 230, 130, 42, 'sans-serif', '#FFFFFF')
-        .drawText(`We're glad you're here, ${username} 🎉`, 230, 180, 24, 'sans-serif', '#B5BAC1')
-        .exportGIF({ fastMode: true }); 
-
-    const attachment = new AttachmentBuilder(buffer, { name: 'welcome.gif' });
-    await interaction.editReply({ files: [attachment] });
-}
-```
-
-## 2. The Static `/rank` Card
-
-When generating hundreds of rank cards, you usually want to keep them static to save CPU overhead. Using `.exportPNG()` makes this lightning fast.
+When generating rank cards, you can rely on Animafy's highly optimized built-in templates. This requires just 1 line of code!
 
 ```javascript
 import { AttachmentBuilder, SlashCommandBuilder } from 'discord.js';
@@ -48,50 +17,134 @@ export const data = new SlashCommandBuilder()
 export async function execute(interaction) {
     await interaction.deferReply();
 
-    // Force 'png' so we don't accidentally load 80 frames of a GIF avatar
-    const avatarUrl = interaction.user.displayAvatarURL({ extension: 'png', size: 256 });
+    // Use forceStatic: false to dynamically get a GIF or PNG from Discord!
+    const avatarUrl = interaction.user.displayAvatarURL({ size: 256, forceStatic: false, extension: 'png' });
 
-    const buffer = await animafyClient.canvas()
-        .setSize(900, 250)
-        .setBackground('#2B2D31')
-        .drawAvatar(avatarUrl, 40, 50, 150)
-        .drawText(interaction.user.username, 220, 100, 48, 'sans-serif', '#FFFFFF')
-        .drawText('Rank: #12', 220, 150, 32, 'sans-serif', '#F1C40F')
-        .drawText('Level: 42', 220, 200, 32, 'sans-serif', '#3498DB')
-        .exportPNG(); // Extremely fast static export!
+    const buffer = await animafyClient.rankCard({
+        username: interaction.user.username,
+        avatarUrl: avatarUrl,
+        level: 42,
+        xp: 8750,
+        maxXp: 10000,
+        rank: 12,
+        theme: 'neon',
+        animated: true // Automatically evaluates to GIF if the user has a Nitro avatar!
+    });
 
-    const attachment = new AttachmentBuilder(buffer, { name: 'rank.png' });
+    const isGif = avatarUrl.includes('.gif');
+    const attachment = new AttachmentBuilder(buffer, { name: `rank.${isGif ? 'gif' : 'png'}` });
     await interaction.editReply({ files: [attachment] });
 }
 ```
 
-## 3. The Multi-Avatar `/showcase`
-
-Animafy intelligently caches and syncs animations. If you draw two different animated avatars, Animafy ensures they play alongside each other correctly!
+## 2. Animated Welcome Card (Template)
 
 ```javascript
 import { AttachmentBuilder, SlashCommandBuilder } from 'discord.js';
 import { animafyClient } from '../services/canvasService.js';
 
 export const data = new SlashCommandBuilder()
-    .setName('showcase')
-    .setDescription('Showcase your avatar next to the bot!');
+    .setName('welcome')
+    .setDescription('Preview the welcome card for a user');
 
 export async function execute(interaction) {
     await interaction.deferReply();
 
-    const userUrl = interaction.user.displayAvatarURL({ extension: 'gif', size: 256 });
-    const botUrl = interaction.client.user.displayAvatarURL({ extension: 'gif', size: 256 });
+    const avatarUrl = interaction.user.displayAvatarURL({ size: 256, forceStatic: false, extension: 'png' });
+
+    const buffer = await animafyClient.welcomeCard({
+        username: interaction.user.username,
+        avatarUrl: avatarUrl,
+        serverName: interaction.guild?.name ?? 'My Server',
+        memberCount: interaction.guild?.memberCount ?? 1337,
+        theme: 'neon',
+        animated: true
+    }); 
+
+    const isGif = avatarUrl.includes('.gif');
+    const attachment = new AttachmentBuilder(buffer, { name: `welcome.${isGif ? 'gif' : 'png'}` });
+    await interaction.editReply({ files: [attachment] });
+}
+```
+
+## 3. Timeline Fade Transition GIF
+
+Animafy v2.0 introduces the `TimelineBuilder` for orchestrating complex frame-by-frame animations with transitions.
+
+```javascript
+import { AttachmentBuilder, SlashCommandBuilder } from 'discord.js';
+import { animafyClient } from '../services/canvasService.js';
+
+export const data = new SlashCommandBuilder()
+    .setName('transition')
+    .setDescription('Generate a multi-frame timeline GIF!');
+
+export async function execute(interaction) {
+    await interaction.deferReply();
+
+    const gifBuffer = await animafyClient.timeline()
+        .setSize(800, 400)
+        .setFPS(20)
+        // Add the first frame (held for 1000ms)
+        .addFrame(canvas => {
+            canvas.setBackground('#0D0D12')
+                  .drawText('Phase 1', 100, 200, 48, 'sans-serif', '#FF3366');
+        }, 1000)
+        // Automatically crossfade between the frames over 500ms
+        .transition('fade', 500)
+        // Add the second frame (held for 1000ms)
+        .addFrame(canvas => {
+            canvas.setBackground('#16161F')
+                  .drawText('Phase 2', 500, 200, 48, 'sans-serif', '#7289DA');
+        }, 1000)
+        .export();
+
+    const attachment = new AttachmentBuilder(gifBuffer, { name: 'timeline.gif' });
+    await interaction.editReply({ files: [attachment] });
+}
+```
+
+## 4. Custom Visual Effects (Filters & Shadows)
+
+Want to build your own graphics using the raw `CanvasBuilder`? You can use the new Visual Effects API!
+
+```javascript
+import { AttachmentBuilder, SlashCommandBuilder } from 'discord.js';
+import { animafyClient } from '../services/canvasService.js';
+
+export const data = new SlashCommandBuilder()
+    .setName('effects')
+    .setDescription('Generate a graphic with gradients and shadows');
+
+export async function execute(interaction) {
+    await interaction.deferReply();
 
     const buffer = await animafyClient.canvas()
-        .setSize(600, 400)
-        .setBackground('#111111')
-        .drawText('Epic Team-Up! ⚔️', 150, 80, 40, 'sans-serif', '#FFFFFF')
-        .drawAvatar(userUrl, 100, 150, 180)
-        .drawAvatar(botUrl, 320, 150, 180)
-        .exportGIF({ fastMode: true }); 
+        .setSize(800, 400)
+        .setBackground('#1a1a2e')
+        
+        // Linear Gradient Background Shape
+        .drawGradient('linear', 100, 100, 700, 300, [
+            { offset: 0, color: '#FF3366' },
+            { offset: 1, color: '#7289DA' }
+        ])
+        .drawRect(0, 0, 800, 400, 'transparent') // Fill canvas with gradient
+        
+        // Text with a Drop Shadow
+        .pushState()
+        .setShadow(5, 5, 15, 'rgba(0, 0, 0, 0.8)')
+        .drawText('Stunning Visuals!', 200, 200, 48, 'sans-serif', '#FFFFFF')
+        .popState() // Remove shadow so it doesn't bleed to the progress bar!
+        
+        // Progress Bar
+        .drawProgressBar(100, 300, 600, 40, 0.85, {
+            barColor: '#FFFFFF',
+            bgColor: 'rgba(0, 0, 0, 0.5)',
+            radius: 20
+        })
+        .exportPNG(); 
 
-    const attachment = new AttachmentBuilder(buffer, { name: 'showcase.gif' });
+    const attachment = new AttachmentBuilder(buffer, { name: 'effects.png' });
     await interaction.editReply({ files: [attachment] });
 }
 ```

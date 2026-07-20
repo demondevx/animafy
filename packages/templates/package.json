@@ -1,25 +1,23 @@
 {
-  "name": "animafy-core",
+  "name": "animafy-templates",
   "version": "2.0.0",
   "type": "module",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
   "scripts": {
     "build": "tsc -b"
   },
   "author": "Demondev_",
   "license": "MIT",
   "dependencies": {
-    "animafy-assets": "2.0.0",
-    "animafy-emoji": "2.0.0",
-    "animafy-text": "2.0.0",
-    "@napi-rs/canvas": "*"
+    "animafy-core": "2.0.0",
+    "animafy-assets": "2.0.0"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/demondevx/animafy.git"
-  },
-  "files": [
-    "dist"
-  ]
+  }
 }

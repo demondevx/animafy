@@ -1,16 +1,16 @@
 {
   "name": "animafy-decoders",
-  "version": "1.0.7",
+  "version": "2.0.0",
   "type": "module",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
-    "build": "tsc"
+    "build": "tsc -b"
   },
   "author": "Demondev_",
   "license": "MIT",
   "dependencies": {
-    "animafy-assets": "1.0.7",
+    "animafy-assets": "2.0.0",
     "omggif": "*"
   },
   "repository": {

@@ -10,6 +10,10 @@ GIF encoding is mathematically expensive.
 If you are generating complex GIFs without `fastMode` on slower hardware, it might take more than 3 seconds. Discord enforces a strict 3-second limit to respond to interactions.
 **Solution:** Always call `await interaction.deferReply()` as the very first line in your execute function. This gives you 15 minutes to process and upload the final image.
 
+### `Failed to fetch asset... Unsupported Media Type` when loading avatars
+This happens when you force Discord to return a `.gif` for a user who does not have an animated Nitro avatar. Discord returns a static image under the hood with a PNG/WebP mime type, causing the AssetManager to safely abort the request.
+**Solution:** Never use `extension: isAnimated ? 'gif' : 'png'`. Instead, use `user.displayAvatarURL({ size: 256, forceStatic: false, extension: 'png' })`. Discord will automatically and safely upgrade the request to a GIF if the user is animated, avoiding all 415 HTTP fetch errors.
+
 ### I'm getting `Error: Server busy`
 Animafy protects your server from memory crashes by capping the internal Worker Queue to 100 concurrent jobs. If you exceed this, it rejects new requests to save the bot from crashing.
 **Solution:** This usually means your bot is being spammed. Ensure you have Discord rate-limiting or cooldowns on your canvas commands. Alternatively, use `fastMode` to clear the queue faster.
@@ -20,7 +24,7 @@ This means `@napi-rs/canvas` cannot find the font family you specified on the ho
 
 ### Emojis aren't rendering / showing up as squares
 Animafy automatically detects Unicode emojis and fetches SVG representations, but if you are attempting to use Discord Custom Emojis (e.g. `<:pepe:12345678>`), those are not raw unicode!
-**Solution:** Animafy's `drawText` currently only parses raw unicode (like 🔥 or 🌍). Custom Discord emojis are actually images and must be parsed and downloaded separately, then drawn via a future image overlay API.
+**Solution:** Animafy's `drawText` currently only parses raw unicode (like 🔥 or 🌍). Custom Discord emojis are actually images and must be parsed and downloaded separately, then drawn via `drawAvatar` or standard rendering APIs.
 
 ### Process is hanging / won't gracefully exit
 Animafy Worker Threads are detached properly (`unref`), but if you are running tests or scripts that exit immediately after generating a canvas, ensure the promises have fully resolved.

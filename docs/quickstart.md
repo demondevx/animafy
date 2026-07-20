@@ -41,7 +41,7 @@ export async function execute(interaction) {
 
     const user = interaction.user;
     // Request a GIF avatar so we can render animations!
-    const avatarUrl = user.displayAvatarURL({ extension: 'gif', size: 256 });
+    const avatarUrl = user.displayAvatarURL({ extension: 'png', forceStatic: false, size: 256 });
 
     // 2. Build the canvas
     const buffer = await animafyClient.canvas()

@@ -1,5 +1,5 @@
 <div align="center">
-  <h1>Animafy</h1>
+  <h1>Animafy v2.0</h1>
   <p><strong>High-performance Canvas + GIF rendering engine for Discord bots.</strong></p>
   
   <p>
@@ -8,30 +8,44 @@
   </p>
 </div>
 
-Create fast, production-grade Discord canvas images & GIFs in seconds. Animafy offloads heavy GIF encoding to a multi-core Worker Pool and automatically caches resources, preventing your Node.js event loop from freezing during heavy server load.
+Create fast, production-grade Discord canvas images & GIFs in seconds. Animafy v2.0 introduces the **Timeline API** for smooth frame transitions, built-in **Card Templates**, and native **Visual Effects** (shadows, gradients, and filters). All heavy GIF encoding is offloaded to a multi-core Worker Pool, preventing your Node.js event loop from freezing.
 
 ```ts
 import { createAnimafy } from 'animafy';
 
 const animafy = createAnimafy();
 
-const buffer = await animafy.canvas()
-  .setSize(800, 300)
-  .setBackground('#1E1F22')
-  .drawAvatar(userAvatarUrl, 50, 75, 150)
-  .drawText("Welcome to the server!", 230, 130, 42, 'sans-serif', '#FFFFFF')
-  .exportGIF({ fastMode: true }); // Automatically scales processing!
+// 1. Easy Built-in Templates
+const rankBuffer = await animafy.rankCard({
+    username: user.username,
+    avatarUrl: user.displayAvatarURL({ size: 256, forceStatic: false }), // Let Discord auto-choose GIF or PNG!
+    level: 42,
+    xp: 8750,
+    maxXp: 10000,
+    rank: 12,
+    theme: 'neon',
+    animated: true // Automatically encodes as GIF if the avatar is animated!
+});
+
+// 2. Custom Timeline GIFs
+const gifBuffer = await animafy.timeline()
+    .setSize(800, 400)
+    .setFPS(20)
+    .addFrame(canvas => canvas.setBackground('#0D0D12').drawText('Frame 1', 100, 200, 48, 'sans-serif', '#FF3366'), 1000)
+    .transition('fade', 500)
+    .addFrame(canvas => canvas.setBackground('#16161F').drawText('Frame 2', 500, 200, 48, 'sans-serif', '#7289DA'), 1000)
+    .export();
 ```
 
 ## Features
 
+- **Timeline API (NEW)**: Build multi-frame GIFs with built-in crossfade transitions.
+- **Template Engine (NEW)**: Ship beautiful, production-ready rank cards, welcome banners, and leaderboards in 1 line of code.
+- **Visual Effects (NEW)**: Native support for Drop Shadows, CSS-like Filters (Blur), Linear Gradients, Opacity, and Progress Bars.
 - **Chainable Builder API**: Write declarative drawing pipelines that are easy to read and maintain.
 - **GIF Encoding**: Native GIF encoding offloaded to a multi-core Worker Thread Pool.
-- **Fast Mode**: Reduce encoding times by up to 90% via automated framerate halving and native downscaling.
 - **Smart Caching**: Built-in `AssetManager` automatically deduplicates CDN fetches and buffers assets with LRU TTL limits.
-- **Unicode Emoji Support**: Automatically resolves native OS emojis or Twemoji fallback.
-- **Rich Text Engine**: Full multi-line text segmentation, font-families, and wrapping algorithms.
-- **Shard-Safe Architecture**: Designed specifically for clustered Node.js environments and Discord.js sharding.
+- **Rich Text Engine**: Full multi-line text segmentation, Unicode emoji integration, and text-wrapping algorithms.
 
 ---
 
