@@ -89,67 +89,109 @@ This makes Animafy blisteringly fast under heavy server load!
 
 ---
 
-## 6. Using Built-in Templates (The Magic Cards)
+## 6. Built-in Templates (New in v2.0)
 
-If you are just starting out with programming, drawing text and shapes manually might feel like too much math. That's why we added **Templates**!
+If you don't want to spend hours doing the math to position text, avatars, and progress bars yourself, Animafy v2.0 gives you **Built-in Templates**. Think of these like pre-made Lego sets. You just hand the Manager your user's data, and it builds the entire image for you instantly!
 
-Templates are like pre-made coloring books. The lines are already drawn; you just hand Animafy the crayons (your data), and it paints a beautiful card for you.
+Available Templates:
+- `rankCard`
+- `welcomeCard`
+- `profileCard`
+- `leaderboardCard`
+- `levelUpCard`
+
+### How to use a Template
+Instead of creating a `canvas()` and drawing manually, you just call the template directly on the `animafyClient`:
 
 ```javascript
-// This is all you need to make an awesome Rank Card!
+// Step 1: Safely get the user's avatar from Discord.
+// (forceStatic: false tells Discord to send a GIF if they have Nitro, or a PNG if they don't. It never crashes!)
+const avatarUrl = interaction.user.displayAvatarURL({ size: 256, forceStatic: false, extension: 'png' });
+
+// Step 2: Fill out the pre-made form (the options object)
 const buffer = await animafyClient.rankCard({
-    username: 'DiscordFan99',
-    avatarUrl: user.displayAvatarURL({ extension: 'png', forceStatic: false }),
-    level: 10,
-    xp: 500,
+    username: interaction.user.username,
+    avatarUrl: avatarUrl,
+    level: 5,
+    xp: 250,
     maxXp: 1000,
-    rank: 1
+    rank: 3,
+    theme: 'neon', // A beautiful built-in dark mode style
+    animated: true // Set to true to automatically process GIF avatars
 });
+
+// Step 3: Send it to Discord!
 ```
+It really is that simple. You get a professionally designed graphic with zero layout math required.
 
-*Note on Avatars: Always use `extension: 'png', forceStatic: false` when getting avatars from Discord! Discord will smartly decide whether to give you a static picture or an animated GIF.*
+---
 
-## 7. Adding Visual Effects (Shadows and Filters)
+## 7. Visual Effects: Shadows, Filters, and Gradients (New in v2.0)
 
-Want to make your canvas look like it was designed in Photoshop? You can add effects like Shadows (to make things pop out) or Blurs.
+If you *do* want to build your own custom layouts, Animafy v2.0 gives you powerful new tools that work just like Photoshop effects.
 
-Think of effects like a magic spotlight. When you turn the spotlight on, everything you draw next gets the effect. But you don't want the spotlight to ruin the rest of your painting! 
-
-To fix this, we use `pushState()` (save my canvas) and `popState()` (go back to how it was).
+### Gradients (Color Fades)
+Instead of a solid color background, you can draw a gradient that smoothly transitions from one color to another.
 
 ```javascript
-builder
-    .pushState() // 📸 Save the canvas normally
-    
-    .setShadow(5, 5, 10, 'black') // 💡 Turn on the Shadow Spotlight!
-    .drawText('This text has a shadow!', 50, 50, 30, 'Arial', 'white')
-    
-    .popState() // ⏪ Turn off the spotlight (go back to the saved state)
-    
-    .drawText('This text is normal again.', 50, 100, 30, 'Arial', 'white');
+.drawGradient('linear', 0, 0, 800, 400, [
+    { offset: 0, color: '#FF0000' }, // Start with Red
+    { offset: 1, color: '#0000FF' }  // End with Blue
+])
+.drawRect(0, 0, 800, 400, 'transparent') // Fill the whole canvas with the gradient!
 ```
 
-## 8. Making Your Own Animations (Timeline)
+### Drop Shadows
+Want your text or shapes to pop off the screen with a glowing shadow?
 
-The Timeline is like a movie director. Instead of a single picture, you are directing a movie frame by frame.
+```javascript
+.setShadow(5, 5, 15, 'rgba(0, 0, 0, 0.8)') // offsetX, offsetY, blur, color
+.drawText('Glowing Text!', 100, 100, 40, 'sans-serif', '#ffffff')
+```
+
+### ⚠️ The Golden Rule of Effects: "Push and Pop"
+When you turn on a shadow or a filter, it applies to **everything** you draw after it. If you add a shadow to your text, your progress bar and avatar will also get that shadow! 
+
+To prevent this, use `pushState()` and `popState()`. 
+- `pushState()` means "Save my current clean paintbrush."
+- `popState()` means "Throw away the messy paintbrush I was just using and give me back my clean one."
+
+```javascript
+.pushState() // SAVE the clean state
+.setShadow(0, 0, 20, '#FF3366') // Turn on a pink glow
+.drawText('Level 99', 50, 50, 30, 'sans-serif', '#ffffff') // This text glows!
+.popState() // RESTORE the clean state (turns the glow OFF)
+
+.drawText('No glow here.', 50, 100, 20, 'sans-serif', '#ffffff') // This text is normal!
+```
+
+---
+
+## 8. The Timeline Builder (New in v2.0)
+
+Sometimes you want an animation that isn't just a spinning avatar. You might want to show one screen, fade to black, and show a second screen. Animafy v2.0 introduces the **TimelineBuilder** for exactly this!
+
+A Timeline works like a movie editor. You add "frames" (snapshots of your canvas) and tell Animafy how to connect them.
 
 ```javascript
 const gifBuffer = await animafyClient.timeline()
     .setSize(800, 400)
-    .setFPS(20) // The movie runs at 20 frames per second
+    .setFPS(20) // We want the movie to run at 20 Frames Per Second
     
-    // Scene 1: The title shows up for 1 second (1000 milliseconds)
-    .addFrame((canvas) => {
-        canvas.setBackground('black').drawText('Scene 1', 100, 100, 50, 'Arial', 'red');
+    // SCENE 1: The First Frame (Show for 1000 milliseconds)
+    .addFrame(canvas => {
+        canvas.setBackground('#000000').drawText('Hello...', 100, 200, 50, 'sans-serif', '#ffffff');
     }, 1000)
     
-    // The director yells "FADE!" - It smoothly transitions the scenes over half a second
+    // SCENE 2: The Transition (Fade between the scenes for 500 milliseconds)
     .transition('fade', 500)
     
-    // Scene 2: The next text shows up for 1 second
-    .addFrame((canvas) => {
-        canvas.setBackground('white').drawText('Scene 2', 100, 100, 50, 'Arial', 'blue');
+    // SCENE 3: The Second Frame (Show for 1000 milliseconds)
+    .addFrame(canvas => {
+        canvas.setBackground('#FFFFFF').drawText('...World!', 100, 200, 50, 'sans-serif', '#000000');
     }, 1000)
     
-    .export(); // Print the movie!
+    // Render the final movie!
+    .export();
 ```
+The Timeline engine automatically does all the math to generate the smooth fading animation between the two completely different canvases. You just give it the key scenes, and it does the rest!
